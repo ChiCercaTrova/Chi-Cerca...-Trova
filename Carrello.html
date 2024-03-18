@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Effetto 3D sui bottoni */
+        .button-3d {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            text-transform: uppercase;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .button-3d::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            transform: translateZ(-25px) scale(2);
+        }
+
+        .button-3d:hover::before {
+            opacity: 1;
+        }
+
+        .button-3d:hover {
+            transform: translateY(-3px) rotateX(15deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shopping Cart</h1>
+        <div class="products">
+            <div class="product">
+                <img src="1.png" alt="Product 1">
+                <h2>Product 1</h2>
+                <p>$10</p>
+                <button class="add-to-cart button-3d" data-price="10">Add</button>
+                <button class="remove-from-cart button-3d" style="display: none;">Remove</button>
+            </div>
+            <!-- Add more products here -->
+        </div>
+        <div class="cart">
+            <h2>Cart</h2>
+            <ul class="cart-items"></ul>
+            <div class="cart-total">
+                <strong>Total: </strong><span class="total-price">$0</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        let productsAdded = {};
+
+        // Selezione del pulsante di aggiunta al carrello e gestione dell'evento click
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const removeFromCartButtons = document.querySelectorAll('.remove-from-cart');
+
+        addToCartButtons.forEach((button, index) => {
+            button.addEventListener('click', () => addToCart(index));
+        });
+
+        removeFromCartButtons.forEach((button, index) => {
+            button.addEventListener('click', () => removeFromCart(index));
+        });
+
+        function addToCart(index) {
+            const button = addToCartButtons[index];
+            const product = button.parentElement;
+            const productTitle = product.querySelector('h2').innerText;
+            const productPrice = parseFloat(product.querySelector('p').innerText.replace('$', ''));
+
+            if (!productsAdded[productTitle]) {
+                addToCartList(productTitle, productPrice);
+                updateCartTotal();
+                productsAdded[productTitle] = true;
+                button.style.display = 'none';
+                removeFromCartButtons[index].style.display = 'inline-block';
+            }
+        }
+
+        function removeFromCart(index) {
+            const button = removeFromCartButtons[index];
+            const product = button.parentElement;
+            const productTitle = product.querySelector('h2').innerText;
+            const productPrice = parseFloat(product.querySelector('p').innerText.replace('$', ''));
+
+            if (productsAdded[productTitle]) {
+                removeFromCartList(productTitle, productPrice);
+                updateCartTotal();
+                productsAdded[productTitle] = false;
+                button.style.display = 'none';
+                addToCartButtons[index].style.display = 'inline-block';
+            }
+        }
+
+        // Aggiunta del prodotto alla lista del carrello
+        function addToCartList(title, price) {
+            const cartItem = document.createElement('li');
+            cartItem.innerText = `${title} - $${price}`;
+            const cartItems = document.querySelector('.cart-items');
+            cartItems.appendChild(cartItem);
+        }
+
+        // Rimozione del prodotto dalla lista del carrello
+        function removeFromCartList(title, price) {
+            const cartItems = document.querySelectorAll('.cart-items li');
+            cartItems.forEach(item => {
+                if (item.innerText.includes(title)) {
+                    item.remove();
+                }
+            });
+        }
+
+        // Aggiornamento del totale del carrello
+        function updateCartTotal() {
+            const cartItems = document.querySelectorAll('.cart-items li');
+            let total = 0;
+            cartItems.forEach(item => {
+                const itemPrice = parseFloat(item.innerText.split('$')[1]);
+                total += itemPrice;
+            });
+            const totalPrice = document.querySelector('.total-price');
+            totalPrice.innerText = `$${total.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

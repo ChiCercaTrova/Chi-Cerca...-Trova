@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Cerca... Trova</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Definizione dell'animazione per l'effetto di luce */
+        @keyframes lightEffect {
+            0% {
+                color: #fff;
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #3b3a3b, 0 0 30px #383838, 0 0 40px #000000, 0 0 55px #b60909, 0 0 75px #ff0000;
+            }
+            50% {
+                color: #ec0d0d;
+                text-shadow: none;
+            }
+            100% {
+                color: #fff;
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #3b3a3b, 0 0 30px #383838, 0 0 40px #000000, 0 0 55px #b60909, 0 0 75px #ff0000;
+            }
+        }
+
+        /* Applicazione dell'animazione ai pulsanti */
+        .buttons button {
+            animation: lightEffect 2s infinite;
+            transition: transform 0.3s ease-in-out; /* Aggiunta della transizione */
+            cursor: pointer; /* Cambio del cursore al passaggio del mouse */
+        }
+
+        /* Aggiunta dello stato hover per l'animazione */
+        .buttons button:hover {
+            transform: scale(1.1); /* Ingrandisce il pulsante del 10% */
+        }
+
+        /* Stile per il logo */
+        .logo {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px; /* Aggiunge uno spazio tra il logo e il testo */
+            height: 2em; /* Altezza uguale alla dimensione del testo */
+        }
+
+        /* Stile per il titolo */
+        .title {
+            font-size: 2em; /* Stessa dimensione del logo */
+        }
+        
+        /* Animazione per le immagini */
+        .image img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Applicazione dell'animazione al passaggio del mouse */
+        .image img:hover {
+            transform: scale(1.1); /* Ingrandisce l'immagine del 10% */
+        }
+
+        /* Stile per il pallino */
+        .dot {
+            display: inline-block;
+            width: 60px;
+            height: 40px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            margin-left: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Aggiunta dell'animazione al passaggio del mouse */
+        .dot:hover {
+            transform: scale(1.5); /* Ingrandisce il pallino */
+        }
+
+        /* Stile per l'immagine nel pallino */
+        .dot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    </style>
+    <style>
+        /* Definizione dell'animazione per l'effetto di luce */
+        @keyframes lightEffect {
+            0% {
+                color: #fff;
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #3b3a3b, 0 0 30px #383838, 0 0 40px #000000, 0 0 55px #b60909, 0 0 75px #ff0000;
+            }
+            50% {
+                color: #ec0d0d;
+                text-shadow: none;
+            }
+            100% {
+                color: #fff;
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #3b3a3b, 0 0 30px #383838, 0 0 40px #000000, 0 0 55px #b60909, 0 0 75px #ff0000;
+            }
+        }
+
+        /* Stile del bottone */
+        .button-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            perspective: 1000px;
+            z-index: 9999; /* Assicura che il bottone sia sopra gli altri elementi */
+        }
+
+        .button {
+            width: 100px;
+            height: 60px;
+            background-color: #ffffff;
+            border-radius: 20%;
+            box-shadow: 0 5px 15px rgb(255, 0, 0);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .button:hover {
+            transform: rotateY(30deg) rotateX(30deg) scale(1.1);
+        }
+
+        /* Testo all'interno del bottone */
+        .button-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 1.2em;
+            animation: lightEffect 2s infinite;
+        }
+
+        /* Stile per il logo */
+        .logo {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px; /* Aggiunge uno spazio tra il logo e il testo */
+            height: 2em; /* Altezza uguale alla dimensione del testo */
+        }
+
+        /* Stile per il titolo */
+        .title {
+            font-size: 2em; /* Stessa dimensione del logo */
+        }
+        
+        /* Animazione per le immagini */
+        .image img {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Applicazione dell'animazione al passaggio del mouse */
+        .image img:hover {
+            transform: scale(1.1); /* Ingrandisce l'immagine del 10% */
+        }
+
+        /* Stile per il pallino */
+        .dot {
+            display: inline-block;
+            width: 64px;
+            height: 40px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            margin-left: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Aggiunta dell'animazione al passaggio del mouse */
+        .dot:hover {
+            transform: scale(1.5); /* Ingrandisce il pallino */
+        }
+
+        /* Stile per l'immagine nel pallino */
+        .dot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    </style>
+    
+</head>
+<body>
+    <style>
+        /* Stile del bottone */
+        .button-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            perspective: 1000px;
+            z-index: 9999; /* Assicura che il bottone sia sopra gli altri elementi */
+        }
+
+        .button {
+            width: 100px;
+            height: 60px;
+            background-color: #f3f3f3f3;
+            border-radius: 20%;
+            box-shadow: 0 5px 15px rgb(255, 0, 0);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+
+        .button:hover {
+            transform: rotateY(30deg) rotateX(30deg) scale(1.1);
+        }
+
+        /* Testo all'interno del bottone */
+        .button-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="button-container">
+    <a href="Contattaci.html">
+        <div class="button">
+            <b><strong><div class="button-text">Contattaci</div></strong></b>
+        </div>
+    </a>
+</div>
+    <div class="container">
+        <div class="title">
+            <img src="358363449_666672092150776_7225227594018476518_n-removebg-preview.png" alt="Logo" class="logo">CHI CERCA... TROVA
+        </div>
+        <div class="detail">
+            <div class="image">
+                <img src="IMG_20240316_132404-removebg-preview.png">
+            </div>
+            <div class="content">
+                <h1 class="name"></h1>
+                <div class="price"></div>
+                <div class="buttons">
+                    <button onclick="redirect()">Visita</button>
+                    <button onclick="redirect()">Aggiungi al Carrello</button>
+                    <a href="Arredamento.html"><button>Negozio</button></a>
+                    <!-- Aggiunto il link a Shop -->
+                    <div class="dot" onclick="openCartPage()">
+                        <a href="Carrello.html"><button><img src="1000_F_34977988_7uqHEF3rSmpV0ENhyffE06JaXZLpLUXJ-removebg-preview.png" alt="Immagine di esempio nel pallino"></button></a>
+                    </div>
+                    <!-- Aggiunto il pallino -->
+                </div>
+                <div class="description"></div>
+            </div>
+        </div>
+
+        <div class="title">Prodotti simili</div>
+        <div class="listProduct"></div>
+    </div>
+    <script>
+        // Funzione per reindirizzare l'utente a una pagina bianca
+        function redirect() {
+            // Aggiungi qui la tua URL di destinazione
+            window.location.href = "articoli.html";
+        }
+
+        // Funzione per aprire la pagina del carrello
+        function openCartPage() {
+            window.location.href = "Carello.html";
+        }
+    </script>
+</body>
+</html>
